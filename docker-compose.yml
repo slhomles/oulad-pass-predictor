@@ -1,0 +1,24 @@
+services:
+  backend:
+    build: ./backend
+    container_name: pps-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      - APP_ENV=production
+      - DATA_DIR=/app/data
+      - MODEL_DIR=/app/models
+      - TRAIN_SCHEDULE_CRON=0 0 * * 0
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: pps-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
