@@ -1,0 +1,31 @@
+========================================================================
+LỜI GIẢI ĐÁP: CHIẾN LƯỢC TIỀN XỬ LÝ DỮ LIỆU OULAD VÀ LỰA CHỌN ĐẶC TRƯNG
+========================================================================
+
+Câu 1: Nên làm sạch trước rồi join, hay join rồi mới làm sạch?
+Trả lời: 
+Phương pháp đúng nhất và an toàn nhất cho CSDL OULAD là: Làm sạch cơ bản -> Join -> Làm sạch chuyên sâu.
+- Bước 1 (Làm sạch cơ bản): Vì bảng `studentVle` chứa hơn 10 triệu log tương tác. Nếu bạn join nó ngay với bảng `studentInfo` thì dữ liệu sẽ bị phình to khủng khiếp (bùng nổ dữ liệu) gây tràn RAM. Ta phải "làm sạch cơ bản" bằng cách gộp (Group by) hàng chục triệu record đó lại thành 1 con số: Tổng lượt Click của sinh viên.
+- Bước 2 (Join): Ghép bảng số liệu đã gộp với thông tin sinh viên bằng phép Left Join (dựa trên ID học sinh).
+- Bước 3 (Làm sạch chuyên sâu): Sau khi ghép, một số sinh viên không có click hệ thống sẽ sinh ra giá trị trống (NaN). Lúc này ta gán nó bằng 0 (Imputation).
+
+------------------------------------------------------------------------
+
+Câu 2: Dùng Random Forest ta cần chuẩn hóa dữ liệu nào? Vì sao?
+Trả lời:
+- [KHÔNG CẦN] Thu nhỏ tham số (Scaling): Các biến liên tục như Toán học (Điểm số), Số lần Click không cần phải trải qua kỹ thuật chuẩn hóa StandardScaler hay MinMaxScaler (đưa về phân phối hay phạm vi [0-1]). Lý do: Random Forest là thuật toán dựa trên ngưỡng rẽ nhánh (Tree-based), giá trị lớn hay nhỏ không làm thiên lệch trọng số của cây.
+- [BẮT BUỘC] Mã hóa hạng mục (Encoding Categoricals): Các biến dưới dạng chữ như Giới tính ("M", "F"), Khu vực, Độ học vấn bắt buộc phải được chuyển thành các con số (0, 1, 2...). Lý do: Thư viện Machine Learning (scikit-learn) sử dụng phép toán đại số sâu bên dưới, nó không thể hiểu được các chuỗi văn bản (String).
+
+------------------------------------------------------------------------
+
+Câu 3: Làm sao để biết một thuộc tính "là cần thiết"? Phải thử hay có phương pháp?
+Trả lời:
+Cả hai! Ta dựa vào phương pháp thực hành phân tích trực quan từ sự thử nghiệm.
+Phương pháp được dùng mang tên: Feature Importance (Chấm điểm mức độ quan trọng tập đặc trưng). 
+
+Quá trình diễn ra như sau:
+1. Bạn đưa tất cả dữ liệu gốc (sau khi xử lý chuỗi thành số) vào cho mô hình Random Forest "học" một lần.
+2. Mô hình này rất thông minh, trong thuật toán của nó có hệ số "Gini Impurity". Nếu một biến số giúp nó phân minh rõ ràng và chặt chẽ nhất "ai đậu, ai rớt", nó sẽ tính điểm cao cho biến số đó.
+3. Chạy lệnh trích xuất "rf.feature_importances_". 
+
+-> Kết quả cho thấy: Điểm số bài học và Lượt tương tác VLE chiếm đến hơn 50% tính quyết định của toàn hệ thống thuật toán. Trong khi thông tin về Sinh viên có "Khuyết tật" hoặc "Số lần thử lại" đóng góp ít hơn 1% (chúng là nhiễu). Do đó, những biến < 1% được phép loại bỏ thanh thản vì chúng không mang tính dự báo thực tiễn.

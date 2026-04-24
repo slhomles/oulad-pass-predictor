@@ -75,7 +75,9 @@ Thumbs.db
 desktop.ini
 
 # ==========================================
-# Reports (giữ folder, bỏ file export)
+# Reports & Scratch
 # ==========================================
 reports/figures/*
 !reports/figures/.gitkeep
+scratch/
+*.scratch.*
