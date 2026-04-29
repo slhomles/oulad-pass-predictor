@@ -79,3 +79,7 @@ desktop.ini
 # ==========================================
 reports/figures/*
 !reports/figures/.gitkeep
+
+
+#AI
+CLAUDE.md
