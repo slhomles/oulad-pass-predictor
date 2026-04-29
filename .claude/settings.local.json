@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(PYTHONIOENCODING=utf-8 PYTHONUTF8=1 \"d:/Data Minning/oulad-pass-predictor/backend/.venv/Scripts/python.exe\" -X utf8 eda.py)",
+      "Bash(\"d:/Data Minning/oulad-pass-predictor/backend/.venv/Scripts/python.exe\" -c \"import sklearn; import pandas; import seaborn; print\\('OK'\\)\")",
+      "Bash(\"d:/Data Minning/oulad-pass-predictor/backend/.venv/Scripts/python.exe\" -c \"import matplotlib; print\\(matplotlib.get_backend\\(\\)\\)\")"
+    ]
+  }
+}

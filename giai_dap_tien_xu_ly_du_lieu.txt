@@ -28,4 +28,8 @@ Quá trình diễn ra như sau:
 2. Mô hình này rất thông minh, trong thuật toán của nó có hệ số "Gini Impurity". Nếu một biến số giúp nó phân minh rõ ràng và chặt chẽ nhất "ai đậu, ai rớt", nó sẽ tính điểm cao cho biến số đó.
 3. Chạy lệnh trích xuất "rf.feature_importances_". 
 
--> Kết quả cho thấy: Điểm số bài học và Lượt tương tác VLE chiếm đến hơn 50% tính quyết định của toàn hệ thống thuật toán. Trong khi thông tin về Sinh viên có "Khuyết tật" hoặc "Số lần thử lại" đóng góp ít hơn 1% (chúng là nhiễu). Do đó, những biến < 1% được phép loại bỏ thanh thản vì chúng không mang tính dự báo thực tiễn.
+-> Kết quả phiên bản nâng cao (20 đặc trưng): 
+- Điểm trọng số tích lũy (total_weighted_score) và Số lượng bài nộp (assessment_count) hiện là 2 yếu tố quan trọng nhất (chiếm gần 40% trọng số).
+- Việc phân tách các loại click VLE (như homepage, quiz, forumng) giúp mô hình hiểu rõ hành vi học tập cụ thể thay vì chỉ nhìn vào tổng số click chung chung.
+- Các yếu tố như "Thời điểm đăng ký" (date_registration) cũng đã lọt vào Top 20, chứng minh sự chuẩn bị sớm có liên quan mật thiết đến kết quả đầu ra.
+- Chúng ta chỉ giữ lại đúng 20 thuộc tính có điểm cao nhất để đảm bảo mô hình tinh gọn nhưng vẫn đạt hiệu suất dự báo tối ưu.
