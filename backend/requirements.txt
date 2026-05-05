@@ -7,3 +7,7 @@ joblib
 apscheduler
 python-multipart
 pydantic-settings
+jupyter
+matplotlib
+seaborn
+pyarrow

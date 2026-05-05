@@ -81,3 +81,7 @@ reports/figures/*
 !reports/figures/.gitkeep
 scratch/
 *.scratch.*
+
+
+#AI
+CLAUDE.md
